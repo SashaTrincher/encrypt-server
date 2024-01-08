@@ -1,0 +1,18 @@
+services:
+  encryptionService:
+    type: server
+    protocol: HTTPS
+    endpoint: /encrypt
+    method: POST
+    security: 
+      tls: true
+      certificate: path/to/certificate.pem
+
+  decryptionService:
+    type: server
+    protocol: HTTPS
+    endpoint: /decrypt
+    method: POST
+    security: 
+      tls: true
+      certificate: path/to/certificate.pem

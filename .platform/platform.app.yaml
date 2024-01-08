@@ -1,0 +1,39 @@
+name: encryption-server
+
+type: 'nodejs:20' 
+
+mounts:
+  'web/uploads':
+    source: local
+    source_path: uploads
+
+disk: 2048  
+
+
+web:
+  commands:
+    start: "node server.js"  
+
+hooks:
+  build: npm install
+
+variables:
+  env:
+    NODE_ENV: "production"
+
+routes:
+  "https://{default}/":
+    type: upstream
+    upstream: "app:http"
+
+    "https://{default}/":
+    type: redirect
+    to: "https://www.{default}/"
+
+relationships:
+  database: "mysqldb:mysql"
+
+crons:
+  cronjob:
+    spec: '*/5 * * * *'
+    cmd: 'execute-cron.sh'
